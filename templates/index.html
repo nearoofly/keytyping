@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Récupération des frappes clavier</title>
+</head>
+<body>
+    <input type="text" id="inputField">
+    <script>
+        const inputField = document.getElementById('inputField');
+
+        inputField.addEventListener('input', function(event) {
+            const typedText = event.target.value;
+
+            // Envoi des données tapées au serveur Flask
+            fetch('/save_typed_text', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ typedText: typedText })
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data); // Affichage de la réponse du serveur dans la console
+            });
+        });
+    </script>
+</body>
+</html>
